@@ -8,6 +8,7 @@ class CalcController {
         this._dateEl = document.querySelector('#data')
         this._timeEl = document.querySelector('#hora')
         this._originCountry = 'pt-BR'
+        this._operation = [];
 
         //Chamando a função initiliaze quando irá ser feito uma nova instância da classe "calcController"
         this.initialize()
@@ -40,6 +41,76 @@ class CalcController {
         })
     }
 
+
+    //Método que irá pegar o nome da classe dos botões já alterada e criar um switch para cada valor digitado
+    execBtn(value) {
+        switch (value) {
+            case 'ac':
+                this.clearAll();
+                break;
+            case 'ce':
+                this.clearEntry();
+                break;
+            case 'soma':
+
+                break;
+            case 'subtracao':
+
+                break;
+            case 'divisao':
+
+                break;
+            case 'multiplicacao':
+
+                break;
+            case 'porcento':
+
+                break;
+            case 'igual':
+
+
+                break;
+            case 'ponto':
+
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+
+                this.addOperation(parseInt(value));
+                break;
+            default:
+                this.setError();
+
+        }
+    }
+
+    clearAll() {
+        this._operation = []
+    }
+
+    clearEntry() {
+        this._operation.pop()
+    }
+
+    //Método pra setar a mensagem de erro no Switch default
+    setError() {
+        this.displayCalc = "Houve um erro"
+    }
+
+    addOperation(value) {
+        this._operation.push(value)
+        console.log(this._operation)
+    }
+
+
     initButtonsEvents() {
 
         let buttons = document.querySelectorAll('#buttons > g, #parts > g');
@@ -49,7 +120,10 @@ class CalcController {
             //Passando os parâmetros para o evento criado 'addEventListenerAll''
             this.addEventListenerAll(btn, 'click drag', e => {
 
-                console.log(btn.className.baseVal.replace("btn -", ""))
+                let textBtn = btn.className.baseVal.replace("btn-", "");
+                this.execBtn(textBtn);
+                
+
             })
 
             //Eventos de mouse para tornar o cursor como pointer
