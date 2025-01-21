@@ -52,26 +52,26 @@ class CalcController {
                 this.clearEntry();
                 break;
             case 'soma':
-
+                this.addOperation('+')
                 break;
             case 'subtracao':
-
+                this.addOperation('-')
                 break;
             case 'divisao':
-
+                this.addOperation('/')
                 break;
             case 'multiplicacao':
-
+                this.addOperation('*')
                 break;
             case 'porcento':
-
+                this.addOperation('%')
                 break;
             case 'igual':
 
 
                 break;
             case 'ponto':
-
+                this.addOperation('.')
                 break;
             case '0':
             case '1':
@@ -105,9 +105,38 @@ class CalcController {
         this.displayCalc = "Houve um erro"
     }
 
+    getLastOperation() {
+        return this._operation[this._operation.length - 1]
+    }
+
+    isOperador(value) {
+        if (['+', '-', '*', '/'].indexOf(value) > -1) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    //Validação do último dígito e inserção no Array
     addOperation(value) {
-        this._operation.push(value)
-        console.log(this._operation)
+
+        if (isNaN(this.getLastOperation())) {
+            if (this.isOperador(value)) {
+                this._operation[this._operation.length - 1] = value
+            } else if (isNaN(value)) {
+                console.log(value)
+            }
+            else {
+                this._operation.push(value)
+            }
+
+        } else {
+            let newValue = this.getLastOperation().toString() + value.toString()
+            this._operation.push(newValue)
+
+        }
+
     }
 
 
@@ -122,7 +151,7 @@ class CalcController {
 
                 let textBtn = btn.className.baseVal.replace("btn-", "");
                 this.execBtn(textBtn);
-                
+
 
             })
 
